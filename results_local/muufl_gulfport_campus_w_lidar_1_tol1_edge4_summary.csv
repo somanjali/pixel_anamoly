@@ -1,0 +1,6 @@
+,,,roc_auc,roc_auc,pr_auc,pr_auc,recall@1%fpr,recall@1%fpr,recall@0.1%fpr,recall@0.1%fpr
+,,,mean,std,mean,std,mean,std,mean,std
+scene,detector,pca,,,,,,,,
+muufl_gulfport_campus_w_lidar_1,localrx,0,0.695,,0.011,,0.219,,0.078,
+muufl_gulfport_campus_w_lidar_1,localrx_wide,0,0.695,,0.005,,0.188,,0.031,
+muufl_gulfport_campus_w_lidar_1,rx,0,0.649,,0.007,,0.203,,0.047,

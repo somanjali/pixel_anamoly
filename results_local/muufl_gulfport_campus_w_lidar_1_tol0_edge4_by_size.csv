@@ -1,0 +1,13 @@
+scene,detector,pca,size,n_pixels,roc_auc,pr_auc,recall@1%fpr,recall@0.1%fpr
+muufl_gulfport_campus_w_lidar_1,rx,0,0.5,20,0.5510918593660805,0.0002155463219497634,0.0,0.0
+muufl_gulfport_campus_w_lidar_1,rx,0,1.0,20,0.5739699042663697,0.00027238431581977054,0.0,0.0
+muufl_gulfport_campus_w_lidar_1,rx,0,3.0,20,0.6004587821334656,0.00266897742739199,0.2,0.05
+muufl_gulfport_campus_w_lidar_1,rx,0,6.0,4,0.9988793643960734,0.022481836590368048,1.0,0.5
+muufl_gulfport_campus_w_lidar_1,localrx,0,0.5,20,0.5154535415828334,0.00043495244505711205,0.05,0.0
+muufl_gulfport_campus_w_lidar_1,localrx,0,1.0,20,0.7586866805790808,0.0019440523142832042,0.1,0.05
+muufl_gulfport_campus_w_lidar_1,localrx,0,3.0,20,0.7043889611544185,0.011467351418073896,0.3,0.1
+muufl_gulfport_campus_w_lidar_1,localrx,0,6.0,4,0.6642538298131182,6.777878382046987e-05,0.0,0.0
+muufl_gulfport_campus_w_lidar_1,localrx_wide,0,0.5,20,0.5282849362243704,0.0004647157480829384,0.05,0.0
+muufl_gulfport_campus_w_lidar_1,localrx_wide,0,1.0,20,0.6761330351210473,0.0007602052247768892,0.05,0.0
+muufl_gulfport_campus_w_lidar_1,localrx_wide,0,3.0,20,0.6289180134569854,0.006560724993009118,0.25,0.15
+muufl_gulfport_campus_w_lidar_1,localrx_wide,0,6.0,4,0.9965047398908842,0.006403623854324973,1.0,0.0

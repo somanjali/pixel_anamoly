@@ -1,0 +1,15 @@
+,,,roc_auc,roc_auc,pr_auc,pr_auc,recall@1%fpr,recall@1%fpr,recall@0.1%fpr,recall@0.1%fpr
+,,,mean,std,mean,std,mean,std,mean,std
+scene,detector,pca,,,,,,,,
+abu-airport-1,autoencoder,0,0.914,0.009,0.126,0.016,0.116,0.038,0.0,0.0
+abu-airport-1,autoencoder,20,0.862,0.104,0.083,0.047,0.014,0.024,0.0,0.0
+abu-airport-1,iforest,0,0.86,0.005,0.054,0.003,0.0,0.0,0.0,0.0
+abu-airport-1,iforest,20,0.886,0.012,0.076,0.01,0.0,0.0,0.0,0.0
+abu-airport-1,localrx,0,0.981,,0.568,,0.75,,0.062,
+abu-airport-1,localrx,20,0.981,,0.568,,0.75,,0.062,
+abu-airport-1,localrx_wide,0,0.959,,0.456,,0.556,,0.125,
+abu-airport-1,localrx_wide,20,0.959,,0.456,,0.556,,0.125,
+abu-airport-1,ocsvm,0,0.615,0.012,0.031,0.001,0.014,0.024,0.0,0.0
+abu-airport-1,ocsvm,20,0.611,0.011,0.031,0.002,0.014,0.024,0.0,0.0
+abu-airport-1,rx,0,0.931,,0.164,,0.153,,0.028,
+abu-airport-1,rx,20,0.883,,0.078,,0.028,,0.0,

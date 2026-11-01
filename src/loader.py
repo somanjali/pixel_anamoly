@@ -3,21 +3,21 @@
     wavelengths (B,) or None
     truth       (H, W) bool   - True where a real anomaly/target is (used ONLY for evaluation)
     sizes       (H, W) float or None - target size per truth pixel, for the per-size breakdown
+    valid_mask  (H, W) bool or None  - pixels that hold real data
 """
 import numpy as np
 import scipy.io as sio
 
-# ---- MUUFL: fill these in AFTER running inspect_mat.py (dotted paths, e.g. "hsi.Data") ----
+# ---- MUUFL field paths (filled in from inspect_mat.py output) ----
 MUUFL_KEYS = {
-   
     "cube": "hsi.Data",
     "wavelengths": "hsi.info.wavelength",
     "target_rows": "hsi.groundTruth.Targets_rowIndices",
     "target_cols": "hsi.groundTruth.Targets_colIndices",
     "target_sizes": "hsi.groundTruth.Targets_Size",
+    "valid_mask": "hsi.valid_mask",
 }
-MUUFL_INDEX_BASE = 1 # optional: size of each panel
-     # MATLAB indices start at 1; set 0 if the file is already 0-based
+MUUFL_INDEX_BASE = 1       # confirmed 1-based with check_base.py
 
 
 def _load_mat(path):
@@ -51,7 +51,10 @@ def load_muufl(path):
         s = np.atleast_1d(_get(m, k["target_sizes"])).astype(float)
         sizes = np.zeros((h, w), float)
         sizes[rows[ok], cols[ok]] = s[ok]
-    return dict(cube=cube, wavelengths=wl, truth=truth, sizes=sizes)
+    vm = None
+    if k.get("valid_mask"):
+        vm = np.asarray(_get(m, k["valid_mask"])) > 0
+    return dict(cube=cube, wavelengths=wl, truth=truth, sizes=sizes, valid_mask=vm)
 
 
 def load_abu(path):
@@ -59,7 +62,7 @@ def load_abu(path):
     m = sio.loadmat(path)
     cube = np.asarray(m["data"], dtype=np.float32)
     truth = np.asarray(m["map"]) > 0
-    return dict(cube=cube, wavelengths=None, truth=truth, sizes=None)
+    return dict(cube=cube, wavelengths=None, truth=truth, sizes=None, valid_mask=None)
 
 
 LOADERS = {"muufl": load_muufl, "abu": load_abu}

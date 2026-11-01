@@ -1,0 +1,11 @@
+,,,roc_auc,roc_auc,pr_auc,pr_auc,recall@1%fpr,recall@1%fpr,recall@0.1%fpr,recall@0.1%fpr
+,,,mean,std,mean,std,mean,std,mean,std
+scene,detector,pca,,,,,,,,
+muufl_gulfport_campus_w_lidar_1,autoencoder,0,0.626,0.01,0.005,0.001,0.141,0.016,0.047,0.0
+muufl_gulfport_campus_w_lidar_1,autoencoder,20,0.621,0.019,0.004,0.001,0.135,0.024,0.036,0.009
+muufl_gulfport_campus_w_lidar_1,iforest,0,0.475,0.007,0.001,0.0,0.021,0.009,0.0,0.0
+muufl_gulfport_campus_w_lidar_1,iforest,20,0.626,0.009,0.004,0.0,0.141,0.0,0.031,0.0
+muufl_gulfport_campus_w_lidar_1,ocsvm,0,0.56,0.042,0.003,0.001,0.109,0.0,0.016,0.0
+muufl_gulfport_campus_w_lidar_1,ocsvm,20,0.558,0.042,0.003,0.001,0.109,0.0,0.016,0.0
+muufl_gulfport_campus_w_lidar_1,rx,0,0.602,,0.004,,0.125,,0.047,
+muufl_gulfport_campus_w_lidar_1,rx,20,0.627,,0.005,,0.141,,0.031,

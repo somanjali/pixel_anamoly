@@ -1,5 +1,7 @@
 """STEP 4 - every detector has the same interface:  Detector(seed).fit_score(X) -> scores.
 Higher score = more anomalous. Labels are never passed in."""
+from functools import partial
+
 import numpy as np
 from sklearn.ensemble import IsolationForest
 from sklearn.svm import OneClassSVM
@@ -74,5 +76,62 @@ class Autoencoder:
         return torch.cat(out).numpy()
 
 
-DETECTORS = {"rx": RX, "iforest": IForest, "ocsvm": OCSVM, "autoencoder": Autoencoder}
-DETERMINISTIC = {"rx"}                                   # no need to repeat over seeds
+class LocalRX:
+    """Local RX: each pixel is compared with its OWN surroundings (an annulus between an inner guard
+    window and an outer window) instead of the whole scene. A panel on grass is judged against grass.
+    Works on the first `n_components` principal components so the local covariance is well conditioned.
+    Needs the pixel grid, so it is called as fit_score(X, valid, shape)."""
+    needs_grid = True
+
+    def __init__(self, seed=0, inner=5, outer=15, n_components=10, ridge=1e-3, chunk=20000):
+        assert inner % 2 == 1 and outer % 2 == 1 and outer > inner
+        self.inner, self.outer, self.nc, self.ridge, self.chunk = inner, outer, n_components, ridge, chunk
+
+    def fit_score(self, X, valid, shape):
+        from scipy.ndimage import uniform_filter
+        from sklearn.decomposition import PCA
+        Z = X.astype(np.float64)
+        if Z.shape[1] > self.nc:
+            Z = PCA(self.nc, random_state=0).fit_transform(Z)
+        d = Z.shape[1]
+        H, W = shape
+        vm = valid.reshape(H, W)
+        grid = np.zeros((H, W, d))
+        grid[vm] = Z                                       # invalid pixels stay 0, so they add nothing to sums
+        ao, ai = self.outer ** 2, self.inner ** 2
+
+        def annulus_sum(a):                                # sum over outer window minus inner window
+            return (ao * uniform_filter(a, self.outer, mode="constant")
+                    - ai * uniform_filter(a, self.inner, mode="constant"))
+
+        n = annulus_sum(vm.astype(np.float64))             # valid samples in each annulus
+        iu = np.triu_indices(d)
+        s1 = np.stack([annulus_sum(grid[..., i]) for i in range(d)], -1)
+        s2 = np.stack([annulus_sum(grid[..., i] * grid[..., j]) for i, j in zip(*iu)], -1)
+
+        ok = vm & (n >= max(3 * d, 30))                    # enough local samples to estimate a covariance
+        rows, cols = np.nonzero(ok)
+        scores = np.full((H, W), np.nan)
+        eye = np.eye(d)
+        for a in range(0, len(rows), self.chunk):
+            r, c = rows[a:a + self.chunk], cols[a:a + self.chunk]
+            nn = n[r, c]
+            mu = s1[r, c] / nn[:, None]
+            cov = np.empty((len(r), d, d))
+            sec = s2[r, c] / nn[:, None]
+            cov[:, iu[0], iu[1]] = sec
+            cov[:, iu[1], iu[0]] = sec
+            cov -= mu[:, :, None] * mu[:, None, :]
+            cov *= (nn / (nn - 1))[:, None, None]
+            tr = np.trace(cov, axis1=1, axis2=2)
+            cov += (self.ridge * tr / d + 1e-9)[:, None, None] * eye
+            diff = grid[r, c] - mu
+            sol = np.linalg.solve(cov, diff[:, :, None])[:, :, 0]
+            scores[r, c] = (diff * sol).sum(axis=1)
+        out = scores[vm]
+        return np.where(np.isnan(out), np.nanmin(out), out)    # pixels without enough context: least anomalous
+
+
+DETECTORS = {"rx": RX, "localrx": LocalRX, "localrx_wide": partial(LocalRX, inner=9, outer=25),
+             "iforest": IForest, "ocsvm": OCSVM, "autoencoder": Autoencoder}
+DETERMINISTIC = {"rx", "localrx", "localrx_wide"}        # no need to repeat over seeds

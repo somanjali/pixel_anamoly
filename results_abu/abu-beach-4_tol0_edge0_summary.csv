@@ -1,0 +1,9 @@
+,,,roc_auc,roc_auc,pr_auc,pr_auc,recall@1%fpr,recall@1%fpr,recall@0.1%fpr,recall@0.1%fpr
+,,,mean,std,mean,std,mean,std,mean,std
+scene,detector,pca,,,,,,,,
+abu-beach-4,autoencoder,0,0.94,0.007,0.204,0.035,0.397,0.044,0.206,0.015
+abu-beach-4,iforest,0,0.941,0.003,0.225,0.016,0.368,0.029,0.181,0.034
+abu-beach-4,localrx,0,0.926,,0.48,,0.75,,0.382,
+abu-beach-4,localrx_wide,0,0.948,,0.429,,0.824,,0.397,
+abu-beach-4,ocsvm,0,0.801,0.004,0.423,0.031,0.672,0.031,0.368,0.015
+abu-beach-4,rx,0,0.954,,0.33,,0.471,,0.324,

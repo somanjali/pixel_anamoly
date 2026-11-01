@@ -1,0 +1,9 @@
+scene,detector,pca,size,n_pixels,roc_auc,pr_auc,recall@1%fpr,recall@0.1%fpr
+muufl_gulfport_campus_w_lidar_1,rx,0,0.5,20,0.5842092160678233,0.00023086266037122507,0.0,0.0
+muufl_gulfport_campus_w_lidar_1,rx,0,1.0,20,0.6002580827874768,0.0002751202051858834,0.0,0.0
+muufl_gulfport_campus_w_lidar_1,rx,0,3.0,20,0.6071525474826651,0.002494371534571982,0.2,0.05
+muufl_gulfport_campus_w_lidar_1,rx,0,6.0,4,0.9988192141493317,0.021068786111067692,1.0,0.5
+muufl_gulfport_campus_w_lidar_1,iforest,0,0.5,20,0.4138617863896731,0.00015766313227031845,0.0,0.0
+muufl_gulfport_campus_w_lidar_1,iforest,0,1.0,20,0.44907455623464065,0.00017399675391622079,0.0,0.0
+muufl_gulfport_campus_w_lidar_1,iforest,0,3.0,20,0.4731582481431743,0.00025512256986314223,0.0,0.0
+muufl_gulfport_campus_w_lidar_1,iforest,0,6.0,4,0.9765487251167082,0.0009206971461389394,0.0,0.0

@@ -1,0 +1,4 @@
+scene,detector,pca,seed,seconds,roc_auc,pr_auc,recall@1%fpr,recall@0.1%fpr
+muufl_gulfport_campus_w_lidar_1,rx,0,0,0.2,0.6016551308266034,0.004263645937942847,0.125,0.046875
+muufl_gulfport_campus_w_lidar_1,localrx,0,0,1.2,0.6598062341496739,0.006742295480750073,0.140625,0.046875
+muufl_gulfport_campus_w_lidar_1,localrx_wide,0,0,1.0,0.6351990414939312,0.0055316015689086655,0.171875,0.046875

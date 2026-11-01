@@ -17,7 +17,7 @@ def good_bands(wavelengths, bad_ranges=((1340, 1470), (1790, 1960))):
     return np.where(keep)[0]
 
 
-def prepare(cube, bands=None, n_components=None):
+def prepare(cube, bands=None, n_components=None, valid_mask=None):
     """Returns X (n_valid_pixels, n_features), valid (H*W,) bool mask, (H, W)."""
     cube = cube.astype(np.float32)
     if bands is not None:
@@ -25,6 +25,8 @@ def prepare(cube, bands=None, n_components=None):
     h, w, b = cube.shape
     flat = cube.reshape(-1, b)                           # row-major: pixel i = (i // w, i % w)
     valid = np.isfinite(flat).all(axis=1) & (np.abs(flat).sum(axis=1) > 0)
+    if valid_mask is not None:                           # the file's own mask of real pixels
+        valid &= np.asarray(valid_mask, bool).ravel()
     X = StandardScaler().fit_transform(flat[valid])
     if n_components:
         X = PCA(n_components=n_components, random_state=0).fit_transform(X)
